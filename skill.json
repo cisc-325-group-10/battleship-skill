@@ -1,0 +1,23 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-CA": {
+          "summary": "Sample Short Description",
+          "examplePhrases": [
+            "Alexa open hello world",
+            "hello",
+            "help"
+          ],
+          "name": "battleship",
+          "description": "Sample Full Description"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Sample Testing Instructions.",
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": []
+    },
+    "manifestVersion": "1.0"
+  }
+}

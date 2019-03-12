@@ -1,0 +1,29 @@
+{
+  "deploy_settings": {
+    "default": {
+      "skill_id": "amzn1.ask.skill.5c974d16-72db-4281-9138-d65582d668d1",
+      "was_cloned": false,
+      "merge": {
+        "manifest": {
+          "apis": {
+            "custom": {
+              "endpoint": {
+                "uri": "arn:aws:lambda:us-east-1:558709501430:function:battleship-skill-dev-skill"
+              }
+            }
+          }
+        }
+      },
+      "resources": {
+        "manifest": {
+          "eTag": "410b0f4fd639dfefd4577963417d6cf6"
+        },
+        "interactionModel": {
+          "en-CA": {
+            "eTag": "96bd2050bd8db34ca1fed52dc892539e"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+service: battleship-skill
+
+provider:
+  name: aws
+  role: myDefaultRole
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'} # default stage is dev, but you can override it.
+  region: us-east-1 # Alexa is only available in eu-west-1 or us-east-1
+  memorySize: 256
+  cfLogs: true # AWS Cloudformation logging
+
+functions:
+  skill:
+    timeout: 30
+    handler: src/unity.handler # path to the alexa handler - {path}/{filename}.{handler function}
+    description: Example hello world Alexa skill
+    events:
+      - alexaSkill: amzn1.ask.skill.5c974d16-72db-4281-9138-d65582d668d1
+
+plugins:
+  - serverless-webpack
+  - serverless-plugin-webpack-permission
+custom:
+  webpack:
+    includeModules: true # Node modules configuration for packaging
+
+resources:
+  Resources:
+    myDefaultRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/AWSLambdaFullAccess

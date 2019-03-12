@@ -1,0 +1,132 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "battleship",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "StartGameIntent",
+                    "samples": [
+                        "start the game",
+                        "start game",
+                        "start"
+                    ]
+                },
+                {
+                    "name": "DestroyIntent",
+                    "samples": [
+                        "destroy ship"
+                    ]
+                },
+                {
+                    "name": "MathGameAnswer",
+                    "slots": [
+                        {
+                            "name": "Answer",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "my anwser is {Answer}",
+                        "answer {Answer}",
+                        "answer is {Answer}"
+                    ]
+                },
+                {
+                    "name": "NextGame",
+                    "samples": [
+                        "move to next game",
+                        "move to the next game",
+                        "move on",
+                        "advance",
+                        "next game",
+                        "next"
+                    ]
+                },
+                {
+                    "name": "ColorGameAnswer",
+                    "slots": [
+                        {
+                            "name": "ColorA",
+                            "type": "Colors"
+                        },
+                        {
+                            "name": "ColorB",
+                            "type": "Colors"
+                        },
+                        {
+                            "name": "ColorC",
+                            "type": "Colors"
+                        },
+                        {
+                            "name": "ColorD",
+                            "type": "Colors"
+                        },
+                        {
+                            "name": "ColorE",
+                            "type": "Colors"
+                        }
+                    ],
+                    "samples": [
+                        "{ColorA} {ColorB} {ColorC} {ColorD} {ColorE}",
+                        "the colors are {ColorA} {ColorB} {ColorC} {ColorD} {ColorE}",
+                        "colors {ColorA} {ColorB} {ColorC} {ColorD} {ColorE}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "Colors",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "white"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "red"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "green"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "yellow"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "blue"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "grey"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "gray"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
