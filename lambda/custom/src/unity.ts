@@ -23,10 +23,9 @@ const LaunchRequestHandler = {
         }
 
         var reprompt = " What shall we do?";
-        var speechText = "Welcome to the Unity Plus Alexa Test!";
 
         var response = responseBuilder
-            .speak(speechText + reprompt)
+            .speak(reprompt)
             .reprompt(reprompt)
             .getResponse();
 
@@ -45,99 +44,48 @@ const LaunchRequestHandler = {
     }
 };
 
-const DestroyIntentHandler = {
+const PlaceIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'DestroyIntent';
+            && handlerInput.requestEnvelope.request.intent.name === 'PlaceIntent';
+    },
+    async handle(handlerInput) {
+        const row = handlerInput.requestEnvelope.request.intent.slots.row.value;
+        const col = handlerInput.requestEnvelope.request.intent.slots.col.value;
+        const orientation = handlerInput.requestEnvelope.request.intent.slots.orientation.value;
+        const ship = handlerInput.requestEnvelope.request.intent.slots.ship.value;
+        const payload = { type: "PlaceRequest", row, col, orientation, ship };
+        return await sendUnityMessage(payload, "What's next?", handlerInput);
+
+    }
+}
+
+const ConfirmPlacementIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'ConfirmPlacementIntent';
     },
     async handle(handlerInput) {
         return await sendUnityMessage({
-            type: "DestroyRequest"
+            type: "ConfirmPlacement"
         }, "What's next?", handlerInput);
 
     }
 }
 
-const StartGameIntentHandler = {
+const FireIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'StartGameIntent';
+            && handlerInput.requestEnvelope.request.intent.name === 'FireIntent';
     },
     async handle(handlerInput) {
-        return await sendUnityMessage({
-            type: "StartRequest"
-        }, "What's next?", handlerInput);
+        const row = handlerInput.requestEnvelope.request.intent.slots.row.value;
+        const col = handlerInput.requestEnvelope.request.intent.slots.col.value;
+        const payload = { type: "FireRequest", row, col };
+        return await sendUnityMessage(payload, "What's next?", handlerInput);
 
     }
 }
-
-const NextGameIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'NextGame';
-    },
-    async handle(handlerInput) {
-        return await sendUnityMessage({
-            type: "NextGameRequest"
-        }, "What's next?", handlerInput);
-
-    }
-}
-
-
-const MathGameAnswerIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'MathGameAnswer';
-    },
-    async handle(handlerInput) {
-        const answer = handlerInput.requestEnvelope.request.intent.slots.Answer.value;
-        const payload = { type: "MathGameAnswer", answer: answer };
-        return await sendUnityMessage(payload, "What's your answer?", handlerInput);
-    }
-};
-
-const TicTacToeIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'TicTacToeAnswer';
-    },
-    async handle(handlerInput) {
-        const answer = handlerInput.requestEnvelope.request.intent.slots.position.value;
-        const payload = { type: "TicTacToeAnswer", position: answer };
-        return await sendUnityMessage(payload, "What's your move?", handlerInput);
-    }
-};
-
-const ColorGameAnswerIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'ColorGameAnswer';
-    },
-    async handle(handlerInput) {
-        const slots = handlerInput.requestEnvelope.request.intent.slots;
-        const payload = {
-            type: "ColorGameAnswer",
-            color1: slots.ColorA.value,
-            color2: slots.ColorB.value,
-            color3: slots.ColorC.value,
-            color4: slots.ColorD.value,
-            color5: slots.ColorE.value
-        };
-        return await sendUnityMessage(payload, "What's your answer?", handlerInput);
-    }
-};
-
-const HelpIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
-    },
-    async handle(handlerInput) {
-        const payload = { type: "HelpRequest" };
-        return await sendUnityMessage(payload, null, handlerInput);
-    },
-};
 
 const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
@@ -154,6 +102,7 @@ const CancelAndStopIntentHandler = {
             .getResponse();
     },
 };
+
 const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
@@ -199,13 +148,9 @@ const skillBuilder = Alexa.SkillBuilders.standard();
 export const handler = skillBuilder
     .addRequestHandlers(
         LaunchRequestHandler,
-        DestroyIntentHandler,
-        StartGameIntentHandler,
-        NextGameIntentHandler,
-        MathGameAnswerIntentHandler,
-        TicTacToeIntentHandler,
-        ColorGameAnswerIntentHandler,
-        HelpIntentHandler,
+        PlaceIntentHandler,
+        ConfirmPlacementIntentHandler,
+        FireIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler
     )
@@ -233,7 +178,7 @@ async function sendUnityMessage(payload: any, reprompt: string | null, handler: 
 async function launchSetUp(reprompt, handlerInput, attributes) {
     const responseBuilder = handlerInput.responseBuilder;
 
-    let speechText = "Before we begin playing, we would normally need to go through some setup. You would receive a code to enter in the game to connect with the Alexa. For now there is no input screen so it is hardcoded." + reprompt;
+    let speechText = "Welcome to battleship!";
     //let speechText = `<speak> Before we begin playing, we need to go through some setup. Your player ID is  <say-as interpret-as="spell-out">${attributes.PUBNUB_CHANNEL}</say-as>. You will need to input this ID in the game when prompted. ${reprompt} </speak>`
     var response = await alexaPlusUnity.addChannelToGroup(attributes.PUBNUB_CHANNEL, "Battleship").then(async (data) => {
         var responseToReturn = responseBuilder

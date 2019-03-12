@@ -8,120 +8,146 @@
                     "samples": []
                 },
                 {
-                    "name": "AMAZON.HelpIntent",
-                    "samples": []
-                },
-                {
                     "name": "AMAZON.StopIntent",
                     "samples": []
                 },
                 {
-                    "name": "StartGameIntent",
+                    "name": "ConfirmPlacementIntent",
                     "samples": [
-                        "start the game",
-                        "start game",
-                        "start"
+                        "confirm placemenet",
+                        "confirm"
                     ]
                 },
                 {
-                    "name": "DestroyIntent",
-                    "samples": [
-                        "destroy ship"
-                    ]
-                },
-                {
-                    "name": "MathGameAnswer",
+                    "name": "FireIntent",
                     "slots": [
                         {
-                            "name": "Answer",
+                            "name": "row",
                             "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "col",
+                            "type": "Columns"
                         }
                     ],
                     "samples": [
-                        "my anwser is {Answer}",
-                        "answer {Answer}",
-                        "answer is {Answer}"
+                        "fire at {col} {row}",
+                        "fire {col} {row}"
                     ]
                 },
                 {
-                    "name": "NextGame",
-                    "samples": [
-                        "move to next game",
-                        "move to the next game",
-                        "move on",
-                        "advance",
-                        "next game",
-                        "next"
-                    ]
-                },
-                {
-                    "name": "ColorGameAnswer",
+                    "name": "PlaceIntent",
                     "slots": [
                         {
-                            "name": "ColorA",
-                            "type": "Colors"
+                            "name": "row",
+                            "type": "AMAZON.NUMBER"
                         },
                         {
-                            "name": "ColorB",
-                            "type": "Colors"
+                            "name": "col",
+                            "type": "Columns"
                         },
                         {
-                            "name": "ColorC",
-                            "type": "Colors"
+                            "name": "orientation",
+                            "type": "Orientations"
                         },
                         {
-                            "name": "ColorD",
-                            "type": "Colors"
-                        },
-                        {
-                            "name": "ColorE",
-                            "type": "Colors"
+                            "name": "ship",
+                            "type": "Ships"
                         }
                     ],
                     "samples": [
-                        "{ColorA} {ColorB} {ColorC} {ColorD} {ColorE}",
-                        "the colors are {ColorA} {ColorB} {ColorC} {ColorD} {ColorE}",
-                        "colors {ColorA} {ColorB} {ColorC} {ColorD} {ColorE}"
+                        "place {ship} at {col} {row} {orientation}",
+                        "place {ship} {col} {row} {orientation}"
                     ]
                 }
             ],
             "types": [
                 {
-                    "name": "Colors",
+                    "name": "Orientations",
                     "values": [
                         {
                             "name": {
-                                "value": "white"
+                                "value": "vertical"
                             }
                         },
                         {
                             "name": {
-                                "value": "red"
+                                "value": "horizontal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Ships",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "battleship"
                             }
                         },
                         {
                             "name": {
-                                "value": "green"
+                                "value": "cruiser"
                             }
                         },
                         {
                             "name": {
-                                "value": "yellow"
+                                "value": "destroyer"
                             }
                         },
                         {
                             "name": {
-                                "value": "blue"
+                                "value": "frigate"
                             }
                         },
                         {
                             "name": {
-                                "value": "grey"
+                                "value": "corvette"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Columns",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "A"
                             }
                         },
                         {
                             "name": {
-                                "value": "gray"
+                                "value": "B"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "C"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "D"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "E"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "F"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "G"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "H"
                             }
                         }
                     ]
